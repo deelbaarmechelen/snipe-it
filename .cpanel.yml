@@ -1,6 +1,6 @@
 ---
 deployment:
  tasks:
- - export DEPLOYPATH=/home/deelba1q/inventory/public_html/
+ - export DEPLOYPATH=/home/deelba1q/inventory.deelbaarmechelen.be/public_html/
  - /bin/cp index.html $DEPLOYPATH
  - /bin/cp style.css $DEPLOYPATH
