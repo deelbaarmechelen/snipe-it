@@ -1,26 +1,27 @@
 FROM ubuntu:xenial
-MAINTAINER Brady Wetherington <uberbrady@gmail.com>
+LABEL maintainer="uberbrady, hinchk"
 
+RUN apt-get update && apt-get install -y software-properties-common
+RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 RUN apt-get update && apt-get install -y \
 apache2 \
 apache2-bin \
-libapache2-mod-php7.0 \
-php7.0-curl \
-php7.0-ldap \
-php7.0-mysql \
-php7.0-mcrypt \
-php7.0-gd \
-php7.0-xml \
-php7.0-mbstring \
-php7.0-zip \
-php7.0-bcmath \
+libapache2-mod-php7.1 \
+php7.1-curl \
+php7.1-ldap \
+php7.1-mysql \
+php7.1-mcrypt \
+php7.1-gd \
+php7.1-xml \
+php7.1-mbstring \
+php7.1-zip \
+php7.1-bcmath \
 patch \
 curl \
 vim \
 git \
-cron \
 mysql-client \
-cron \
+supervisor \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -28,8 +29,8 @@ RUN phpenmod mcrypt
 RUN phpenmod gd
 RUN phpenmod bcmath
 
-RUN sed -i 's/variables_order = .*/variables_order = "EGPCS"/' /etc/php/7.0/apache2/php.ini
-RUN sed -i 's/variables_order = .*/variables_order = "EGPCS"/' /etc/php/7.0/cli/php.ini
+RUN sed -i 's/variables_order = .*/variables_order = "EGPCS"/' /etc/php/7.1/apache2/php.ini
+RUN sed -i 's/variables_order = .*/variables_order = "EGPCS"/' /etc/php/7.1/cli/php.ini
 
 RUN useradd -m --uid 1000 --gid 50 docker
 
@@ -69,7 +70,9 @@ RUN \
       && rm -r "/var/www/html/storage/app/backups" && ln -fs "/var/lib/snipeit/dumps" "/var/www/html/storage/app/backups" \
       && mkdir "/var/lib/snipeit/keys" && ln -fs "/var/lib/snipeit/keys/oauth-private.key" "/var/www/html/storage/oauth-private.key" \
       && ln -fs "/var/lib/snipeit/keys/oauth-public.key" "/var/www/html/storage/oauth-public.key" \
-      && chown docker "/var/lib/snipeit/keys/"
+      && chown docker "/var/lib/snipeit/keys/" \
+      && chmod +x /var/www/html/artisan \
+      && echo "Finished setting up application in /var/www/html"
 
 ############## DEPENDENCIES via COMPOSER ###################
 
@@ -96,16 +99,11 @@ VOLUME ["/var/lib/snipeit"]
 
 ##### START SERVER
 
-COPY docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY docker/startup.sh docker/supervisord.conf /
+COPY docker/supervisor-exit-event-listener /usr/bin/supervisor-exit-event-listener
+RUN chmod +x /startup.sh /usr/bin/supervisor-exit-event-listener
 
-# Add Tini
-ENV TINI_VERSION v0.14.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
-ENTRYPOINT ["/tini", "--"]
-
-CMD ["/entrypoint.sh"]
+CMD ["/startup.sh"]
 
 EXPOSE 80
 EXPOSE 443

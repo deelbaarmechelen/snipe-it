@@ -27,20 +27,24 @@ class ConsumablesController extends Controller
                 ->with('company', 'location', 'category', 'users', 'manufacturer')
         );
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $consumables = $consumables->TextSearch(e($request->input('search')));
         }
 
-        if ($request->has('company_id')) {
+        if ($request->filled('company_id')) {
             $consumables->where('company_id','=',$request->input('company_id'));
         }
 
-        if ($request->has('manufacturer_id')) {
+        if ($request->filled('category_id')) {
+            $consumables->where('category_id','=',$request->input('category_id'));
+        }
+
+        if ($request->filled('manufacturer_id')) {
             $consumables->where('manufacturer_id','=',$request->input('manufacturer_id'));
         }
 
 
-        $offset = request('offset', 0);
+        $offset = (($consumables) && (request('offset') > $consumables->count())) ? 0 : request('offset', 0);
         $limit = request('limit', 50);
         $allowed_columns = ['id','name','order_number','min_amt','purchase_date','purchase_cost','company','category','model_number', 'item_no', 'manufacturer','location','qty','image'];
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';

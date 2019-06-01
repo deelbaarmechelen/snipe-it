@@ -33,13 +33,13 @@ class DepartmentsController extends Controller
             'departments.created_at',
             'departments.updated_at',
             'departments.image'
-        ])->with('users')->with('location')->with('manager')->with('company')->withCount('users');
+        ])->with('users')->with('location')->with('manager')->with('company')->withCount('users as users_count');
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $departments = $departments->TextSearch($request->input('search'));
         }
 
-        $offset = $request->input('offset', 0);
+        $offset = (($departments) && (request('offset') > $departments->count())) ? 0 : request('offset', 0);
         $limit = $request->input('limit', 50);
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
         $sort = in_array($request->input('sort'), $allowed_columns) ? $request->input('sort') : 'created_at';
@@ -76,7 +76,7 @@ class DepartmentsController extends Controller
         $department = new Department;
         $department->fill($request->all());
         $department->user_id = Auth::user()->id;
-        $department->manager_id = ($request->has('manager_id' ) ? $request->input('manager_id') : null);
+        $department->manager_id = ($request->filled('manager_id' ) ? $request->input('manager_id') : null);
 
         if ($department->save()) {
             return response()->json(Helper::formatStandardApiResponse('success', $department, trans('admin/departments/message.create.success')));
@@ -142,7 +142,7 @@ class DepartmentsController extends Controller
             'image',
         ]);
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $departments = $departments->where('name', 'LIKE', '%'.$request->get('search').'%');
         }
 

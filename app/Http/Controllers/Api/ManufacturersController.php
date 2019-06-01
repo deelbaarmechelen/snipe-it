@@ -26,20 +26,20 @@ class ManufacturersController extends Controller
 
         $manufacturers = Manufacturer::select(
             array('id','name','url','support_url','support_email','support_phone','created_at','updated_at','image', 'deleted_at')
-        )->withCount('assets')->withCount('licenses')->withCount('consumables')->withCount('accessories');
+        )->withCount('assets as assets_count')->withCount('licenses as licenses_count')->withCount('consumables as consumables_count')->withCount('accessories as accessories_count');
 
         if ($request->input('deleted')=='true') {
             $manufacturers->onlyTrashed();
         }
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $manufacturers = $manufacturers->TextSearch($request->input('search'));
         }
 
 
 
 
-        $offset = request('offset', 0);
+        $offset = (($manufacturers) && (request('offset') > $manufacturers->count())) ? 0 : request('offset', 0);
         $limit = $request->input('limit', 50);
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
         $sort = in_array($request->input('sort'), $allowed_columns) ? $request->input('sort') : 'created_at';
@@ -83,7 +83,7 @@ class ManufacturersController extends Controller
     public function show($id)
     {
         $this->authorize('view', Manufacturer::class);
-        $manufacturer = Manufacturer::withCount('assets')->withCount('licenses')->withCount('consumables')->withCount('accessories')->findOrFail($id);
+        $manufacturer = Manufacturer::withCount('assets as assets_count')->withCount('licenses as licenses_count')->withCount('consumables as consumables_count')->withCount('accessories as accessories_count')->findOrFail($id);
         return (new ManufacturersTransformer)->transformManufacturer($manufacturer);
     }
 
@@ -145,7 +145,7 @@ class ManufacturersController extends Controller
             'image',
         ]);
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $manufacturers = $manufacturers->where('name', 'LIKE', '%'.$request->get('search').'%');
         }
 

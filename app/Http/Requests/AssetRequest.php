@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
 use App\Models\AssetModel;
 use Session;
+
+
+use Illuminate\Contracts\Validation\Validator;
 
 class AssetRequest extends Request
 {
@@ -64,5 +66,23 @@ class AssetRequest extends Request
             ->put('default', new \Illuminate\Support\MessageBag($errors)));
         \Input::flash();
         return parent::response($errors);
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * public function json($data = [], $status = 200, array $headers = [], $options = 0)
+     *
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        return response()->json([
+                'message' => 'The given data is invalid',
+                'errors' => $validator->errors()
+        ], 422);
     }
 }

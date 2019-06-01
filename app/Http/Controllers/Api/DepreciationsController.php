@@ -24,11 +24,11 @@ class DepreciationsController extends Controller
 
         $depreciations = Depreciation::select('id','name','months','user_id','created_at','updated_at');
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $depreciations = $depreciations->TextSearch($request->input('search'));
         }
 
-        $offset = $request->input('offset', 0);
+        $offset = (($depreciations) && (request('offset') > $depreciations->count())) ? 0 : request('offset', 0);
         $limit = $request->input('limit', 50);
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
         $sort = in_array($request->input('sort'), $allowed_columns) ? $request->input('sort') : 'created_at';

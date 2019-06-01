@@ -26,27 +26,27 @@ class AccessoriesController extends Controller
 
         $accessories = Accessory::with('category', 'company', 'manufacturer', 'users', 'location');
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $accessories = $accessories->TextSearch($request->input('search'));
         }
 
-        if ($request->has('company_id')) {
+        if ($request->filled('company_id')) {
             $accessories->where('company_id','=',$request->input('company_id'));
         }
 
-        if ($request->has('category_id')) {
+        if ($request->filled('category_id')) {
             $accessories->where('category_id','=',$request->input('category_id'));
         }
 
-        if ($request->has('manufacturer_id')) {
+        if ($request->filled('manufacturer_id')) {
             $accessories->where('manufacturer_id','=',$request->input('manufacturer_id'));
         }
 
-        if ($request->has('supplier_id')) {
+        if ($request->filled('supplier_id')) {
             $accessories->where('supplier_id','=',$request->input('supplier_id'));
         }
 
-        $offset = $request->input('offset', 0);
+        $offset = (($accessories) && (request('offset') > $accessories->count())) ? 0 : request('offset', 0);
         $limit = $request->input('limit', 50);
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
         $sort = in_array($request->input('sort'), $allowed_columns) ? $request->input('sort') : 'created_at';

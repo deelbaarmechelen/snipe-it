@@ -47,6 +47,7 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
         'manager_id',
         'password',
         'phone',
+        'notes',
         'state',
         'username',
         'zip',
@@ -68,6 +69,7 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
         'email'                   => 'email|nullable',
         'password'                => 'required|min:6',
         'locale'                  => 'max:10|nullable',
+        'website'           => 'url|nullable',
     ];
 
     use Searchable;
@@ -269,7 +271,7 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
      **/
     public function managedLocations()
     {
-        return $this->hasMany('\App\Models\Location', 'manager_id')->withTrashed();
+        return $this->hasMany('\App\Models\Location', 'manager_id');
     }
 
     /**
@@ -328,7 +330,7 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
 
     public function scopeGetDeleted($query)
     {
-        return $query->withTrashed()->whereNotNull('deleted_at');
+        return $query->withTrashed()->whereNotNull('users.deleted_at');
     }
 
     public function scopeGetNotDeleted($query)
@@ -388,7 +390,11 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
     }
 
     /**
-     * Check whether two-factor authorization is required and the user has activated it
+     * Check whether two-factor authorization is requiredfor this user
+     *
+     * 0 = 2FA disabled
+     * 1 = 2FA optional
+     * 2 = 2FA universally required
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v4.0]
@@ -397,10 +403,45 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
      */
     public function two_factor_active () {
 
-        if (Setting::getSettings()->two_factor_enabled !='0') {
-            if (($this->two_factor_optin =='1') && ($this->two_factor_enrolled)) {
-                return true;
-            }
+        // If the 2FA is optional and the user has opted in
+        if ((Setting::getSettings()->two_factor_enabled =='1') && ($this->two_factor_optin =='1'))
+        {
+            return true;
+        }
+        // If the 2FA is required for everyone so is implicitly active
+        elseif (Setting::getSettings()->two_factor_enabled =='2')
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Check whether two-factor authorization is required and the user has activated it
+     * and enrolled a device
+     *
+     * 0 = 2FA disabled
+     * 1 = 2FA optional
+     * 2 = 2FA universally required
+     *
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v4.6.14]
+     *
+     * @return bool
+     */
+    public function two_factor_active_and_enrolled () {
+
+        // If the 2FA is optional and the user has opted in and is enrolled
+        if ((Setting::getSettings()->two_factor_enabled =='1') && ($this->two_factor_optin =='1') && ($this->two_factor_enrolled =='1'))
+        {
+            return true;
+        }
+        // If the 2FA is required for everyone and the user has enrolled
+        elseif ((Setting::getSettings()->two_factor_enabled =='2') && ($this->two_factor_enrolled))
+        {
+            return true;
         }
         return false;
 
@@ -411,6 +452,25 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
     {
         return json_decode($this->permissions, true);
     }
+
+    /**
+     * Query builder scope to search user by name with spaces in it.
+     * We don't use the advancedTextSearch() scope because that searches
+     * all of the relations as well, which is more than what we need.
+     *
+     * @param  \Illuminate\Database\Query\Builder $query Query builder instance
+     * @param  array  $terms The search terms
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeSimpleNameSearch($query,  $search) {
+
+           $query = $query->where('first_name', 'LIKE', '%'.$search.'%')
+               ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+               ->orWhereRaw('CONCAT('.DB::getTablePrefix().'users.first_name," ",'.DB::getTablePrefix().'users.last_name) LIKE ?', ["%$search%", "%$search%"]);
+        return $query;
+    }
+
+
 
     /**
      * Run additional, advanced searches.
@@ -445,7 +505,7 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
 
     public function scopeDeleted($query)
     {
-        return $query->whereNotNull('deleted_at');
+        return $query->whereNotNull('users.deleted_at');
     }
 
 
@@ -488,5 +548,18 @@ class User extends SnipeModel implements AuthenticatableContract, CanResetPasswo
     public function scopeOrderDepartment($query, $order)
     {
         return $query->leftJoin('departments as departments_users', 'users.department_id', '=', 'departments_users.id')->orderBy('departments_users.name', $order);
+    }
+
+    /**
+     * Query builder scope to order on company
+     *
+     * @param  Illuminate\Database\Query\Builder  $query  Query builder instance
+     * @param  text                              $order         Order
+     *
+     * @return Illuminate\Database\Query\Builder          Modified query builder
+     */
+    public function scopeOrderCompany($query, $order)
+    {
+        return $query->leftJoin('companies as companies_user', 'users.company_id', '=', 'companies_user.id')->orderBy('companies_user.name', $order);
     }
 }

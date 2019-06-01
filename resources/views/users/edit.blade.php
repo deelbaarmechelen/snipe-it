@@ -163,14 +163,14 @@
 
                 @if ($user->ldap_import!='1')
                 <!-- Password Confirm -->
-                <div class="form-group {{ $errors->has('password_confirm') ? 'has-error' : '' }}">
-                  <label class="col-md-3 control-label" for="password_confirm">
+                <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
+                  <label class="col-md-3 control-label" for="password_confirmation">
                     {{ trans('admin/users/table.password_confirm') }}
                   </label>
                   <div class="col-md-5 {{  ((\App\Helpers\Helper::checkIfRequired($user, 'first_name')) && (!$user->id)) ? ' required' : '' }}">
                     <input
                     type="password"
-                    name="password_confirm"
+                    name="password_confirmation"
                     id="password_confirm"
                     class="form-control"
                     value=""
@@ -182,7 +182,7 @@
                     @if (config('app.lock_passwords') && ($user->id))
                     <p class="help-block">{{ trans('admin/users/table.lock_passwords') }}</p>
                     @endif
-                    {!! $errors->first('password_confirm', '<span class="alert-msg">:message</span>') !!}
+                    {!! $errors->first('password_confirmation', '<span class="alert-msg">:message</span>') !!}
                   </div>
                 </div>
                 @endif
@@ -272,6 +272,15 @@
                     {!! $errors->first('phone', '<span class="alert-msg">:message</span>') !!}
                   </div>
                 </div>
+
+                  <!-- Website URL -->
+                  <div class="form-group {{ $errors->has('website') ? ' has-error' : '' }}">
+                      <label for="website" class="col-md-3 control-label">{{ trans('general.website') }}</label>
+                      <div class="col-md-8">
+                          <input class="form-control" type="text" name="website" id="website" value="{{ Input::old('website', $user->website) }}" />
+                          {!! $errors->first('website', '<span class="alert-msg"><i class="fa fa-times"></i> :message</span>') !!}
+                      </div>
+                  </div>
 
                   <!-- Address -->
                   <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">

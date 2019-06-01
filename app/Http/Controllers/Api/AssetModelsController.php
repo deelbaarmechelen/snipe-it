@@ -48,19 +48,19 @@ class AssetModelsController extends Controller
             'models.updated_at',
          ])
             ->with('category','depreciation', 'manufacturer','fieldset')
-            ->withCount('assets');
+            ->withCount('assets as assets_count');
 
 
 
-        if ($request->has('status')) {
+        if ($request->filled('status')) {
             $assetmodels->onlyTrashed();
         }
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $assetmodels->TextSearch($request->input('search'));
         }
 
-        $offset = $request->input('offset', 0);
+        $offset = (($assetmodels) && (request('offset') > $assetmodels->count())) ? 0 : request('offset', 0);
         $limit = $request->input('limit', 50);
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
         $sort = in_array($request->input('sort'), $allowed_columns) ? $request->input('sort') : 'models.created_at';
@@ -114,7 +114,7 @@ class AssetModelsController extends Controller
     public function show($id)
     {
         $this->authorize('view', AssetModel::class);
-        $assetmodel = AssetModel::withCount('assets')->findOrFail($id);
+        $assetmodel = AssetModel::withCount('assets as assets_count')->findOrFail($id);
         return (new AssetModelsTransformer)->transformAssetModel($assetmodel);
     }
 
@@ -179,7 +179,7 @@ class AssetModelsController extends Controller
             try  {
                 unlink(public_path().'/uploads/models/'.$assetmodel->image);
             } catch (\Exception $e) {
-                \Log::error($e);
+                \Log::info($e);
             }
         }
 
@@ -210,7 +210,7 @@ class AssetModelsController extends Controller
 
         $settings = \App\Models\Setting::getSettings();
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $assetmodels = $assetmodels->SearchByManufacturerOrCat($request->input('search'));
         }
 

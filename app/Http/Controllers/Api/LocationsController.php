@@ -41,17 +41,17 @@ class LocationsController extends Controller
             'locations.updated_at',
             'locations.image',
             'locations.currency'
-        ])->withCount('assignedAssets')
-        ->withCount('assets')
-        ->withCount('users');
+        ])->withCount('assignedAssets as assigned_assets_count')
+        ->withCount('assets as assets_count')
+        ->withCount('users as users_count');
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $locations = $locations->TextSearch($request->input('search'));
         }
 
 
 
-        $offset = $request->input('offset', 0);
+        $offset = (($locations) && (request('offset') > $locations->count())) ? 0 : request('offset', 0);
         $limit = $request->input('limit', 50);
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
         $sort = in_array($request->input('sort'), $allowed_columns) ? $request->input('sort') : 'created_at';
@@ -123,9 +123,9 @@ class LocationsController extends Controller
                 'locations.image',
                 'locations.currency'
             ])
-            ->withCount('assignedAssets')
-            ->withCount('assets')
-            ->withCount('users')->findOrFail($id);
+            ->withCount('assignedAssets as assigned_assets_count')
+            ->withCount('assets as assets_count')
+            ->withCount('users as users_count')->findOrFail($id);
         return (new LocationsTransformer)->transformLocation($location);
     }
 
@@ -192,7 +192,7 @@ class LocationsController extends Controller
             'locations.image',
         ]);
 
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $locations = $locations->where('locations.name', 'LIKE', '%'.$request->get('search').'%');
         }
 
