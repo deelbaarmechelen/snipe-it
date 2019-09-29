@@ -32,6 +32,51 @@
         }
 
 
+        var data = [
+            {
+                tool_id: 2,
+                name: "Mocks",
+                description: null,
+                code: "KB-001-19-001",
+                owner_id: null,
+                reception_date: null,
+                category: "general",
+                brand: "Mock Factory",
+                type: "Test-1234",
+                serial: "",
+                manufacturing_year: null,
+                manufacturer_url: null,
+                doc_url: null,
+                img: null,
+                replacement_value: null,
+                experience_level: null,
+                safety_risk: null,
+                state: "IN_USE",
+                visible: true,
+                reservations: [ ]
+            },
+            {
+                tool_id: 1,
+                name: "Mocks",
+                description: null,
+                code: "TST-000-19-001",
+                owner_id: null,
+                reception_date: null,
+                category: "general",
+                brand: "Mock Factory",
+                type: "Test-1234",
+                serial: "",
+                manufacturing_year: null,
+                manufacturer_url: null,
+                doc_url: null,
+                img: null,
+                replacement_value: null,
+                experience_level: null,
+                safety_risk: null,
+                state: "IN_USE",
+                visible: true,
+                reservations: [ ]
+            }        ];
         $('.snipe-table').bootstrapTable('destroy').bootstrapTable({
             classes: 'table table-responsive table-no-bordered',
 
@@ -71,9 +116,7 @@
             },
             exportTypes: ['csv', 'excel', 'doc', 'txt','json', 'xml', 'pdf'],
 
-
         });
-
     });
 
 
