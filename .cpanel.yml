@@ -4,3 +4,7 @@ deployment:
  - export DEPLOYPATH=/home/deelba1q/inventory.deelbaarmechelen.be/public_html/
  - /bin/cp index.html $DEPLOYPATH
  - /bin/cp style.css $DEPLOYPATH
+ - git reset --hard HEAD
+ - rsync -anv --exclude '.git' --exclude '.github' --exclude '.*' --exclude 'tests' --exclude 'storage' snipe/ inventory.deelbaarmechelen.be
+ - cd ~/inventory.deelbaarmechelen.be
+ - php upgrade.php
