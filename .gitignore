@@ -52,3 +52,4 @@ tests/_support/_generated/*
 *.cache
 /public/storage
 work
+Modules/
