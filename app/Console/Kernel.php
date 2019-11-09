@@ -34,6 +34,9 @@ class Kernel extends ConsoleKernel
         Commands\RestoreDeletedUsers::class,
         Commands\SendUpcomingAuditReport::class,
         Commands\ImportLocations::class,
+        // KB-MAN - start
+        \Modules\Klusbib\Console\UpdateAvatar::class
+        // KB-MAN - end
     ];
 
     /**
@@ -51,6 +54,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('snipeit:backup')->weekly();
         $schedule->command('backup:clean')->daily();
         $schedule->command('snipeit:upcoming-audits')->daily();
+        // KB-MAN - start
+//        $schedule->command('klusbib:update-avatar')->daily();
+        // KB-MAN - end
     }
 
     protected function commands()
