@@ -700,12 +700,12 @@
             @endcan
 
           <!-- KB-MAN start-->
-                <li class="active">
-                    <a href="{{ route('klusbib') }}">  {{--<a href="{{ route('klusbib') }}">--}}
-                        <i class="fa fa-wrench"></i>
-                        <span>{{ trans('klusbib::general.name') }}</span>
-                    </a>
-                </li>
+                {{--<li class="active">--}}
+                    {{--<a href="{{ route('klusbib') }}">--}}
+                        {{--<i class="fa fa-wrench"></i>--}}
+                        {{--<span>{{ trans('klusbib::general.name') }}</span>--}}
+                    {{--</a>--}}
+                {{--</li>--}}
 
         <!-- KB-MAN end -->
           </ul>
