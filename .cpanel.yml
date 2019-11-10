@@ -1,10 +1,16 @@
 ---
 deployment:
  tasks:
- - export DEPLOYPATH=/home/deelba1q/inventory.deelbaarmechelen.be/public_html/
+ - export HOMEDIR=/home/deelba1q
+ - export REPOPATH=$HOMEDIR/snipe
+ - export DEPLOYPATH=$HOMEDIR/inventory.deelbaarmechelen.be/public_html/
  - /bin/cp index.html $DEPLOYPATH
  - /bin/cp style.css $DEPLOYPATH
+ - cd $REPOPATH
  - git reset --hard HEAD
- - rsync -anv --exclude '.git' --exclude '.github' --exclude '.*' --exclude 'tests' --exclude 'storage' snipe/ inventory.deelbaarmechelen.be
+ - cd $HOMEDIR/inventory.deelbaarmechelen.be
+ - tar -czvf ../inventory-min-$(date +"%Y%m%d").tar.gz --exclude=vendor *
+ - cd $REPOPATH
+ - rsync -anv --exclude '.git' --exclude '.github' --exclude '.*' --exclude 'tests' --exclude 'storage' . inventory.deelbaarmechelen.be
  - cd ~/inventory.deelbaarmechelen.be
  - php upgrade.php
