@@ -75,7 +75,7 @@ class Asset extends Depreciable
         'model_id'        => 'required|integer|exists:models,id',
         'status_id'       => 'required|integer|exists:status_labels,id',
         'company_id'      => 'integer|nullable',
-        'warranty_months' => 'numeric|nullable',
+        'warranty_months' => 'numeric|nullable|digits_between:0,240',
         'physical'        => 'numeric|max:1|nullable',
         'checkout_date'   => 'date|max:10|min:10|nullable',
         'checkin_date'    => 'date|max:10|min:10|nullable',
@@ -604,20 +604,26 @@ class Asset extends Depreciable
 
     public function requireAcceptance()
     {
-        return $this->model->category->require_acceptance;
+        if (($this->model) && ($this->model->category)) {
+            return $this->model->category->require_acceptance;
+        }
+
     }
 
     public function getEula()
     {
         $Parsedown = new \Parsedown();
-
-        if ($this->model->category->eula_text) {
-            return $Parsedown->text(e($this->model->category->eula_text));
-        } elseif ($this->model->category->use_default_eula == '1') {
-            return $Parsedown->text(e(Setting::getSettings()->default_eula_text));
-        } else {
-            return false;
+        
+        if (($this->model) && ($this->model->category)) {
+            if ($this->model->category->eula_text) {
+                return $Parsedown->text(e($this->model->category->eula_text));
+            } elseif ($this->model->category->use_default_eula == '1') {
+                return $Parsedown->text(e(Setting::getSettings()->default_eula_text));
+            } else {
+                return false;
+            }
         }
+        return false;
     }
 
     /**
@@ -821,9 +827,11 @@ class Asset extends Depreciable
 
     public function scopeDueForAudit($query, $settings)
     {
+        $interval = $settings->audit_warning_days ?? 0;
+
         return $query->whereNotNull('assets.next_audit_date')
             ->where('assets.next_audit_date', '>=', Carbon::now())
-            ->whereRaw("DATE_SUB(assets.next_audit_date, INTERVAL $settings->audit_warning_days DAY) <= '".Carbon::now()."'")
+            ->whereRaw("DATE_SUB(assets.next_audit_date, INTERVAL $interval DAY) <= '".Carbon::now()."'")
             ->where('assets.archived', '=', 0)
             ->NotArchived();
     }
@@ -866,8 +874,10 @@ class Asset extends Depreciable
 
     public function scopeDueOrOverdueForAudit($query, $settings)
     {
+        $interval = $settings->audit_warning_days ?? 0;
+
         return $query->whereNotNull('assets.next_audit_date')
-            ->whereRaw("DATE_SUB(assets.next_audit_date, INTERVAL $settings->audit_warning_days DAY) <= '".Carbon::now()."'")
+            ->whereRaw("DATE_SUB(assets.next_audit_date, INTERVAL $interval DAY) <= '".Carbon::now()."'")
             ->where('assets.archived', '=', 0)
             ->NotArchived();
     }
@@ -1165,7 +1175,29 @@ class Asset extends Depreciable
                 }
             }
 
-            if (($fieldname!='category') && ($fieldname!='model_number') && ($fieldname!='location') && ($fieldname!='supplier')
+            /**
+             * THIS CLUNKY BIT IS VERY IMPORTANT
+             *
+             * Although inelegant, this section matters a lot when querying against fields that do not
+             * exist on the asset table. There's probably a better way to do this moving forward, for
+             * example using the Schema:: methods to determine whether or not a column actually exists,
+             * or even just using the $searchableRelations variable earlier in this file.
+             *
+             * In short, this set of statements tells the query builder to ONLY query against an
+             * actual field that's being passed if it doesn't meet known relational fields. This
+             * allows us to query custom fields directly in the assetsv table
+             * (regardless of their name) and *skip* any fields that we already know can only be
+             * searched through relational searches that we do earlier in this method.
+             *
+             * For example, we do not store "location" as a field on the assets table, we store
+             * that relationship through location_id on the assets table, therefore querying
+             * assets.location would fail, as that field doesn't exist -- plus we're already searching
+             * against those relationships earlier in this method.
+             *
+             * - snipe 
+             *
+             */
+            if (($fieldname!='category') && ($fieldname!='model_number') && ($fieldname!='rtd_location') && ($fieldname!='location') && ($fieldname!='supplier')
                 && ($fieldname!='status_label') && ($fieldname!='model') && ($fieldname!='company') && ($fieldname!='manufacturer')) {
                     $query->orWhere('assets.'.$fieldname, 'LIKE', '%' . $search_val . '%');
             }
@@ -1365,8 +1397,7 @@ class Asset extends Depreciable
 
 
     /**
-     * Query builder scope to search on location ID
-     *
+     * Query builder scope to search on depreciation name
      * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
      * @param  text                              $search      Search term
      *

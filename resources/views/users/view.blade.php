@@ -293,7 +293,7 @@
 
               @can('view', $user)
                 <div class="col-md-12" style="padding-top: 5px;">
-                  <a href="{{ route('users.print', $user->id) }}" style="width: 100%;" class="btn btn-sm btn-default hidden-print">{{ trans('admin/users/general.print_assigned') }}</a>
+                  <a href="{{ route('users.print', $user->id) }}" style="width: 100%;" class="btn btn-sm btn-default hidden-print" target="_blank" rel="noopener">{{ trans('admin/users/general.print_assigned') }}</a>
                 </div>
               @endcan
 
@@ -340,10 +340,11 @@
                 </tr>
               </thead>
               <tbody>
+              @if ($user->assets)
                 @foreach ($user->assets as $asset)
                 <tr>
                   <td>
-                    @if ($asset->physical=='1')
+                    @if (($asset->model) && ($asset->physical=='1'))
                       <a href="{{ route('models.show', $asset->model->id) }}">{{ $asset->model->name }}</a>
                     @endif
                   </td>
@@ -360,6 +361,7 @@
                   </td>
                 </tr>
                 @endforeach
+                @endif
               </tbody>
             </table>
           </div>

@@ -13,6 +13,7 @@ use App\Models\Asset;
 use App\Http\Transformers\AssetsTransformer;
 use App\Http\Transformers\SelectlistTransformer;
 use App\Http\Transformers\AccessoriesTransformer;
+use App\Http\Transformers\LicensesTransformer;
 
 class UsersController extends Controller
 {
@@ -88,7 +89,10 @@ class UsersController extends Controller
 
         $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
         $offset = (($users) && (request('offset') > $users->count())) ? 0 : request('offset', 0);
-        $limit = request('limit',  20);
+
+        // Check to make sure the limit is not higher than the max allowed
+        ((config('app.max_results') >= $request->input('limit')) && ($request->filled('limit'))) ? $limit = $request->input('limit') : $limit = config('app.max_results');
+
 
         switch ($request->input('sort')) {
             case 'manager':
@@ -225,7 +229,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $this->authorize('view', User::class);
-        $user = User::findOrFail($id);
+        $user = User::withCount('assets as assets_count','licenses as licenses_count','accessories as accessories_count','consumables as consumables_count')->findOrFail($id);
         return (new UsersTransformer)->transformUser($user);
     }
 
@@ -260,11 +264,20 @@ class UsersController extends Controller
 
         if ($user->save()) {
 
+            // Sync group memberships:
+            // This was changed in Snipe-IT v4.6.x to 4.7, since we upgraded to Laravel 5.5
+            // which changes the behavior of has vs filled.
+            // The $request->has method will now return true even if the input value is an empty string or null.
+            // A new $request->filled method has was added that provides the previous behavior of the has method.
+
+            // Check if the request has groups passed and has a value
             if ($request->filled('groups')) {
                 $user->groups()->sync($request->input('groups'));
-            } else {
+            // The groups field has been passed but it is null, so we should blank it out
+            } elseif ($request->has('groups'))  {
                 $user->groups()->sync(array());
             }
+
 
             return response()->json(Helper::formatStandardApiResponse('success', (new UsersTransformer)->transformUser($user), trans('admin/users/message.success.update')));
         }
@@ -287,9 +300,22 @@ class UsersController extends Controller
         $this->authorize('delete', $user);
 
 
-        if ($user->assets()->count() > 0) {
+        if (($user->assets) && ($user->assets->count() > 0)) {
             return response()->json(Helper::formatStandardApiResponse('error', null,  trans('admin/users/message.error.delete_has_assets')));
         }
+
+        if (($user->licenses) && ($user->licenses->count() > 0)) {
+            return response()->json(Helper::formatStandardApiResponse('error', null,  'This user still has ' . $user->licenses->count() . ' license(s) associated with them and cannot be deleted.'));
+        }
+
+        if (($user->accessories) && ($user->accessories->count() > 0)) {
+            return response()->json(Helper::formatStandardApiResponse('error', null,  'This user still has ' . $user->accessories->count() . ' accessories associated with them.'));
+        }
+
+        if (($user->managedLocations()) && ($user->managedLocations()->count() > 0)) {
+            return response()->json(Helper::formatStandardApiResponse('error', null,  'This user still has ' . $user->managedLocations()->count() . ' locations that they manage.'));
+        }
+
 
         if ($user->delete()) {
             return response()->json(Helper::formatStandardApiResponse('success', null,  trans('admin/users/message.success.delete')));
@@ -328,6 +354,23 @@ class UsersController extends Controller
         $this->authorize('view', Accessory::class);
         $accessories = $user->accessories;
         return (new AccessoriesTransformer)->transformAccessories($accessories, $accessories->count());
+    }
+
+    /**
+     * Return JSON containing a list of licenses assigned to a user.
+     *
+     * @author [N. Mathar] [<snipe@snipe.net>]
+     * @since [v5.0]
+     * @param $userId
+     * @return string JSON
+     */
+    public function licenses($id)
+    {
+        $this->authorize('view', User::class);
+        $this->authorize('view', License::class);
+        $user = User::where('id', $id)->withTrashed()->first();
+        $licenses = $user->licenses()->get();
+        return (new LicensesTransformer())->transformLicenses($licenses, $licenses->count());
     }
 
     /**

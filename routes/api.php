@@ -56,6 +56,21 @@ Route::group(['prefix' => 'v1','namespace' => 'Api', 'middleware' => 'api'], fun
                 'uses' => 'AccessoriesController@checkedout'
             ]
         );
+
+        Route::post('{accessory}/checkout',
+            [
+                'as' => 'api.accessories.checkout',
+                'uses' => 'AccessoriesController@checkout'
+            ]
+        );
+
+        Route::post('{accessory}/checkin',
+            [
+                'as' => 'api.accessories.checkin',
+                'uses' => 'AccessoriesController@checkin'
+            ]
+        );
+
     }); // Accessories group
 
 
@@ -723,6 +738,13 @@ Route::group(['prefix' => 'v1','namespace' => 'Api', 'middleware' => 'api'], fun
             [
                 'as' => 'api.users.accessorieslist',
                 'uses' => 'UsersController@accessories'
+            ]
+        );
+
+        Route::get('{user}/licenses',
+            [
+                'as' => 'api.users.licenselist',
+                'uses' => 'UsersController@licenses'
             ]
         );
 

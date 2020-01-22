@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ImportLocations;
+use App\Console\Commands\ReEncodeCustomFieldNames;
 use App\Console\Commands\RestoreDeletedUsers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -13,6 +15,7 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
+     /* obsolete??? Seems no longer present in latest snipeit release 4.8.0
     protected $commands = [
         Commands\PaveIt::class,
         Commands\CreateAdmin::class,
@@ -37,7 +40,8 @@ class Kernel extends ConsoleKernel
         // KB-MAN - start
         \Modules\Klusbib\Console\UpdateAvatar::class
         // KB-MAN - end
-    ];
+    ];*/
+
 
     /**
      * Define the application's command schedule.

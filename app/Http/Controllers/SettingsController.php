@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use enshrined\svgSanitize\Sanitizer;
 use Input;
 use Lang;
 use Illuminate\Http\Request;
@@ -426,12 +427,23 @@ class SettingsController extends Controller
                 $file_name = "logo.".$image->getClientOriginalExtension();
                 $path = public_path('uploads');
                 if ($image->getClientOriginalExtension()!='svg') {
+
                     Image::make($image->getRealPath())->resize(null, 150, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })->save($path.'/'.$file_name);
                 } else {
-                    $image->move($path, $file_name);
+
+                    // This is kinda copypasta from the ImageUploadRequest - should refactor the ImageUploadRequest to better handle maybe
+                    $sanitizer = new Sanitizer();
+                    $dirtySVG = file_get_contents($image->getRealPath());
+                    $cleanSVG = $sanitizer->sanitize($dirtySVG);
+
+                    try {
+                        file_put_contents($path.'/'.$file_name, $cleanSVG);
+                    } catch (\Exception $e) {
+                        \Log::debug($e);
+                    }
                 }
                 $setting->logo = $file_name;
             }
@@ -865,7 +877,7 @@ class SettingsController extends Controller
         $setting->ldap_server = $request->input('ldap_server');
         $setting->ldap_server_cert_ignore = $request->input('ldap_server_cert_ignore', false);
         $setting->ldap_uname = $request->input('ldap_uname');
-        if (Input::has('ldap_pword')) {
+        if (Input::filled('ldap_pword')) {
             $setting->ldap_pword = Crypt::encrypt($request->input('ldap_pword'));
         }
         $setting->ldap_basedn = $request->input('ldap_basedn');
