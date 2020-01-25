@@ -53,3 +53,5 @@ tests/_support/_generated/*
 /public/storage
 work
 Modules/
+
+.rocketeer/logs
