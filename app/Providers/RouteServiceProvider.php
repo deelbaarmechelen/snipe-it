@@ -24,7 +24,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-
         parent::boot();
     }
 
@@ -64,6 +63,12 @@ class RouteServiceProvider extends ServiceProvider
             require base_path('routes/web/components.php');
             require base_path('routes/web/users.php');
             require base_path('routes/web.php');
+//            KB-MAN - start
+            $routesFile = base_path('routes/web-overrides.php');
+            if (file_exists($routesFile)) {
+                require $routesFile;
+            }
+//            KB-MAN - end
         });
     }
 
