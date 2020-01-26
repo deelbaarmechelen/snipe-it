@@ -4421,12 +4421,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/renardeau/klusbib-module.git",
-                "reference": "250e008b2adf52cdcaf388f83efa343bc311039d"
+                "reference": "ffb23f060617fe3fe34bea0263168cb391251c64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/renardeau/klusbib-module/zipball/250e008b2adf52cdcaf388f83efa343bc311039d",
-                "reference": "250e008b2adf52cdcaf388f83efa343bc311039d",
+                "url": "https://api.github.com/repos/renardeau/klusbib-module/zipball/ffb23f060617fe3fe34bea0263168cb391251c64",
+                "reference": "ffb23f060617fe3fe34bea0263168cb391251c64",
                 "shasum": ""
             },
             "require": {
@@ -4456,7 +4456,7 @@
                 "source": "https://github.com/renardeau/klusbib-module/tree/master",
                 "issues": "https://github.com/renardeau/klusbib-module/issues"
             },
-            "time": "2020-01-22T09:29:01+00:00"
+            "time": "2020-01-26T00:39:48+00:00"
         },
         {
             "name": "renardeau/remote-model",
