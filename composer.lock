@@ -3843,16 +3843,16 @@
         },
         {
             "name": "pragmarx/google2fa-laravel",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/antonioribeiro/google2fa-laravel.git",
-                "reference": "4ccc17dbf5ab5f752113cb6088a5afce5191309e"
+                "reference": "876cd52ddef2f39e029441ea2b8c1b9aa4549e58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/antonioribeiro/google2fa-laravel/zipball/4ccc17dbf5ab5f752113cb6088a5afce5191309e",
-                "reference": "4ccc17dbf5ab5f752113cb6088a5afce5191309e",
+                "url": "https://api.github.com/repos/antonioribeiro/google2fa-laravel/zipball/876cd52ddef2f39e029441ea2b8c1b9aa4549e58",
+                "reference": "876cd52ddef2f39e029441ea2b8c1b9aa4549e58",
                 "shasum": ""
             },
             "require": {
@@ -3910,7 +3910,7 @@
                 "google2fa",
                 "laravel"
             ],
-            "time": "2019-10-21T18:34:37+00:00"
+            "time": "2020-01-26T00:46:00+00:00"
         },
         {
             "name": "pragmarx/google2fa-qrcode",
@@ -4421,12 +4421,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/renardeau/klusbib-module.git",
-                "reference": "ffb23f060617fe3fe34bea0263168cb391251c64"
+                "reference": "6c33ff1d19092de74acf93d2a9e65932ea023b5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/renardeau/klusbib-module/zipball/ffb23f060617fe3fe34bea0263168cb391251c64",
-                "reference": "ffb23f060617fe3fe34bea0263168cb391251c64",
+                "url": "https://api.github.com/repos/renardeau/klusbib-module/zipball/6c33ff1d19092de74acf93d2a9e65932ea023b5c",
+                "reference": "6c33ff1d19092de74acf93d2a9e65932ea023b5c",
                 "shasum": ""
             },
             "require": {
@@ -4456,7 +4456,7 @@
                 "source": "https://github.com/renardeau/klusbib-module/tree/master",
                 "issues": "https://github.com/renardeau/klusbib-module/issues"
             },
-            "time": "2020-01-26T00:39:48+00:00"
+            "time": "2020-01-26T15:34:02+00:00"
         },
         {
             "name": "renardeau/remote-model",
