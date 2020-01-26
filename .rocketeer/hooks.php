@@ -25,8 +25,7 @@ return [
     'after'  => [
         'setup'   => [],
         'deploy'  => array (
-            'cp vendor/renardeau/klusbib-module/public/img/DBM_avatar_* ../../shared/public/uploads/avatars',
-            'php artisan migrate',
+            'cp Modules/Klusbib/public/img/DBM_avatar_* ../../shared/public/uploads/avatars',
             'php artisan config:clear',
             'php artisan config:cache',
             'php artisan view:clear',
