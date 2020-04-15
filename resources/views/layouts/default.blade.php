@@ -719,6 +719,15 @@
                             {{--{{ trans('general.list_all') }}--}}
                         {{--</a>--}}
                     {{--</li>--}}
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.home'))
+                    <li>
+                        <a href="{{ route('klusbib.home') }}">
+                            <i class="fa fa-dashboard"></i>
+                            <i class="fa fa-calendar"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    @endif
                     @if (\Illuminate\Support\Facades\Route::has('klusbib.users.index'))
                     <li>
                         <a href="{{ route('klusbib.users.index') }}">
@@ -726,6 +735,22 @@
                             {{ trans('general.people') }}
                         </a>
                     </li>
+                    @endif
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.reservations.index'))
+                        <li>
+                            <a href="{{ route('klusbib.reservations.index') }}">
+                                <i class="fa fa-calendar"></i>
+                                <span>Reservations</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.deliveries.index'))
+                        <li>
+                            <a href="{{ route('klusbib.deliveries.index') }}">
+                                <i class="fa fa-bicycle"></i>
+                                <span>Deliveries</span>
+                            </a>
+                        </li>
                     @endif
                 </ul>
             </li>
