@@ -4428,12 +4428,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/renardeau/klusbib-module.git",
-                "reference": "6b1e0ee31ab924fa1fda0146234f56becef463a6"
+                "reference": "2d041d560a40366a815620aed1ebbcfb99dcbe84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/renardeau/klusbib-module/zipball/6b1e0ee31ab924fa1fda0146234f56becef463a6",
-                "reference": "6b1e0ee31ab924fa1fda0146234f56becef463a6",
+                "url": "https://api.github.com/repos/renardeau/klusbib-module/zipball/2d041d560a40366a815620aed1ebbcfb99dcbe84",
+                "reference": "2d041d560a40366a815620aed1ebbcfb99dcbe84",
                 "shasum": ""
             },
             "require": {
@@ -4463,7 +4463,7 @@
                 "source": "https://github.com/renardeau/klusbib-module/tree/master",
                 "issues": "https://github.com/renardeau/klusbib-module/issues"
             },
-            "time": "2020-04-13T22:11:19+00:00"
+            "time": "2020-04-19T16:20:21+00:00"
         },
         {
             "name": "renardeau/remote-model",
@@ -4471,12 +4471,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/renardeau/remote-model.git",
-                "reference": "b8f2d26e38f8f62f716f8e65f935675e0dfb9c66"
+                "reference": "94f298bfdb5e9bd8d906ab742142785fb5b038df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/renardeau/remote-model/zipball/b8f2d26e38f8f62f716f8e65f935675e0dfb9c66",
-                "reference": "b8f2d26e38f8f62f716f8e65f935675e0dfb9c66",
+                "url": "https://api.github.com/repos/renardeau/remote-model/zipball/94f298bfdb5e9bd8d906ab742142785fb5b038df",
+                "reference": "94f298bfdb5e9bd8d906ab742142785fb5b038df",
                 "shasum": ""
             },
             "require": {
@@ -4527,7 +4527,7 @@
             "support": {
                 "source": "https://github.com/renardeau/remote-model/tree/master"
             },
-            "time": "2019-12-24T01:01:14+00:00"
+            "time": "2020-04-19T16:17:40+00:00"
         },
         {
             "name": "rollbar/rollbar",
