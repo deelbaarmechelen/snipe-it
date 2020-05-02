@@ -10,16 +10,8 @@
 @section('inputFields')
 @include ('partials.forms.edit.name', ['translated_name' => trans('admin/locations/table.name')])
 
-<!-- Parent-->
-<div class="form-group {{ $errors->has('parent_id') ? ' has-error' : '' }}">
-    <label for="parent_id" class="col-md-3 control-label">
-        {{ trans('admin/locations/table.parent') }}
-    </label>
-    <div class="col-md-9{{  (\App\Helpers\Helper::checkIfRequired($item, 'parent_id')) ? ' required' : '' }}">
-        {!! Form::select('parent_id', $location_options , Input::old('parent_id', $item->parent_id), array('class'=>'select2 parent', 'style'=>'width:350px')) !!}
-        {!! $errors->first('parent_id', '<span class="alert-msg"><i class="fa fa-times"></i> :message</span>') !!}
-    </div>
-</div>
+<!-- parent -->
+@include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/locations/table.parent'), 'fieldname' => 'parent_id'])
 
 <!-- Manager-->
 @include ('partials.forms.edit.user-select', ['translated_name' => trans('admin/users/table.manager'), 'fieldname' => 'manager_id'])
@@ -30,8 +22,8 @@
         {{ trans('admin/locations/table.currency') }}
     </label>
     <div class="col-md-9{{  (\App\Helpers\Helper::checkIfRequired($item, 'currency')) ? ' required' : '' }}">
-        {{ Form::text('currency', Input::old('currency', $item->currency), array('class' => 'form-control','placeholder' => 'USD', 'maxlength'=>'3', 'style'=>'width: 60px;')) }}
-        {!! $errors->first('currency', '<span class="alert-msg">:message</span>') !!}
+        {{ Form::text('currency', Input::old('currency', $item->currency), array('class' => 'form-control','placeholder' => 'USD', 'maxlength'=>'3', 'style'=>'width: 60px;', 'aria-label'=>'currency')) }}
+        {!! $errors->first('currency', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
     </div>
 </div>
 
@@ -45,19 +37,22 @@
         </label>
         <div class="col-md-7{{  (\App\Helpers\Helper::checkIfRequired($item, 'ldap_ou')) ? ' required' : '' }}">
             {{ Form::text('ldap_ou', Input::old('ldap_ou', $item->ldap_ou), array('class' => 'form-control')) }}
-            {!! $errors->first('ldap_ou', '<span class="alert-msg">:message</span>') !!}
+            {!! $errors->first('ldap_ou', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
         </div>
     </div>
 @endif
 
 <!-- Image -->
-@if ($item->image)
+@if (($item->image) && ($item->image!=''))
     <div class="form-group {{ $errors->has('image_delete') ? 'has-error' : '' }}">
         <label class="col-md-3 control-label" for="image_delete">{{ trans('general.image_delete') }}</label>
         <div class="col-md-5">
-            {{ Form::checkbox('image_delete') }}
-            <img src="{{ url('/') }}/uploads/locations/{{ $item->image }}" />
-            {!! $errors->first('image_delete', '<span class="alert-msg">:message</span>') !!}
+            <label for="image_delete">
+                {{ Form::checkbox('image_delete', '1', Input::old('image_delete'), array('class' => 'minimal', 'aria-label'=>'required')) }}
+            </label>
+            <br>
+            <img src="{{ url('/') }}/uploads/locations/{{ $item->image }}" alt="Image for {{ $item->name }}">
+            {!! $errors->first('image_delete', '<span class="alert-msg" aria-hidden="true"><br>:message</span>') !!}
         </div>
     </div>
 @endif
