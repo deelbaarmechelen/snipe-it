@@ -723,7 +723,6 @@
                     <li>
                         <a href="{{ route('klusbib.home') }}">
                             <i class="fa fa-dashboard"></i>
-                            <i class="fa fa-calendar"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
@@ -740,7 +739,7 @@
                         <li>
                             <a href="{{ route('klusbib.reservations.index') }}">
                                 <i class="fa fa-calendar"></i>
-                                <span>Reservations</span>
+                                <span>Reservaties</span>
                             </a>
                         </li>
                     @endif
