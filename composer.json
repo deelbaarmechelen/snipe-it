@@ -7,15 +7,11 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/renardeau/klusbib-module"
+      "url": "https://github.com/deelbaarmechelen/klusbib-module"
     },
     {
       "type": "vcs",
-      "url": "https://github.com/renardeau/remote-model"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/renardeau/balance-module"
+      "url": "https://github.com/deelbaarmechelen/remote-model"
     }
   ],
     "require": {
@@ -49,8 +45,8 @@
     "pragmarx/google2fa": "^5.0",
     "pragmarx/google2fa-laravel": "^1.0",
     "predis/predis": "^1.1",
-    "renardeau/klusbib-module": "dev-master",
-    "renardeau/remote-model": "dev-master",
+    "deelbaarmechelen/klusbib-module": "dev-master",
+    "deelbaarmechelen/remote-model": "dev-master",
     "rollbar/rollbar-laravel": "2.*",
     "schuppo/password-strength": "~1.5",
     "spatie/laravel-backup": "^5.12",
@@ -61,8 +57,7 @@
   },
   "disabled-dep": {
     "__comment" : "required? Will add module in vendor dir, but local install is direct checkout in Modules directory",
-    "renardeau/balance-module": "dev-master",
-    "renardeau/klusbib-module": "dev-master"
+    "deelbaarmechelen/klusbib-module": "dev-master"
   },
   "require-dev": {
     "codeception/codeception": "2.3.6",
