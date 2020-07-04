@@ -13,6 +13,7 @@ use App\Models\Asset;
 use App\Http\Transformers\AssetsTransformer;
 use App\Http\Transformers\SelectlistTransformer;
 use App\Http\Transformers\AccessoriesTransformer;
+use App\Http\Transformers\LicensesTransformer;
 
 class UsersController extends Controller
 {
@@ -228,7 +229,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $this->authorize('view', User::class);
-        $user = User::findOrFail($id);
+        $user = User::withCount('assets as assets_count','licenses as licenses_count','accessories as accessories_count','consumables as consumables_count')->findOrFail($id);
         return (new UsersTransformer)->transformUser($user);
     }
 
@@ -353,6 +354,23 @@ class UsersController extends Controller
         $this->authorize('view', Accessory::class);
         $accessories = $user->accessories;
         return (new AccessoriesTransformer)->transformAccessories($accessories, $accessories->count());
+    }
+
+    /**
+     * Return JSON containing a list of licenses assigned to a user.
+     *
+     * @author [N. Mathar] [<snipe@snipe.net>]
+     * @since [v5.0]
+     * @param $userId
+     * @return string JSON
+     */
+    public function licenses($id)
+    {
+        $this->authorize('view', User::class);
+        $this->authorize('view', License::class);
+        $user = User::where('id', $id)->withTrashed()->first();
+        $licenses = $user->licenses()->get();
+        return (new LicensesTransformer())->transformLicenses($licenses, $licenses->count());
     }
 
     /**

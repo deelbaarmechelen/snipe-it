@@ -1,0 +1,9 @@
+---
+deployment:
+ tasks:
+ - export HOMEDIR=/home/deelba1q
+ - export REPOPATH=$HOMEDIR/snipe
+ - export DEPLOYPATH=$HOMEDIR/inventory.deelbaarmechelen.be/public_html/
+ - cd $REPOPATH
+ - git reset --hard HEAD
+ - cd $HOMEDIR/inventory.deelbaarmechelen.be
