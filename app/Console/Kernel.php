@@ -11,6 +11,17 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
 
+    // KB-MAN - start
+    /**
+     * The Artisan commands provided by your application.
+     *
+     * @var array
+     */
+    protected $commands = [
+        \Modules\Klusbib\Console\Commands\SyncLendings::class
+    ];
+    // KB-MAN - end
+
     /**
      * Define the application's command schedule.
      *

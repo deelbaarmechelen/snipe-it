@@ -709,6 +709,60 @@
             </a>
             </li>
             @endcan
+
+          <!-- KB-MAN start-->
+            {{--@can('index', \App\Models\Asset::class)--}}
+            {{--<li class="treeview{{ (Request::is('hardware*') ? ' active' : '') }}">--}}
+{{--            @if (\Nwidart\Modules\Module::getLaravel()::has('klusbib'))--}}
+            <li class="treeview active }}">
+                <a href="#"><i class="fa fa-wrench"></i>
+                    <span>{{ trans('klusbib::general.name') }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    {{--<li>--}}
+                        {{--<a href="{{ url('klusbib') }}">--}}
+                            {{--{{ trans('general.list_all') }}--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.home'))
+                    <li>
+                        <a href="{{ route('klusbib.home') }}">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    @endif
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.users.index'))
+                    <li>
+                        <a href="{{ route('klusbib.users.index') }}">
+                            <i class="fa fa-users"></i>
+                            {{ trans('general.people') }}
+                        </a>
+                    </li>
+                    @endif
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.reservations.index'))
+                        <li>
+                            <a href="{{ route('klusbib.reservations.index') }}">
+                                <i class="fa fa-calendar"></i>
+                                <span>Reservaties</span>
+                            </a>
+                        </li>
+                    @endif
+                    {{--@if (\Illuminate\Support\Facades\Route::has('klusbib.deliveries.index'))--}}
+                        {{--<li>--}}
+                            {{--<a href="{{ route('klusbib.deliveries.index') }}">--}}
+                                {{--<i class="fa fa-bicycle"></i>--}}
+                                {{--<span>Deliveries</span>--}}
+                            {{--</a>--}}
+                        {{--</li>--}}
+                    {{--@endif--}}
+                </ul>
+            </li>
+            {{--@endif--}}
+            {{--@endcan--}}
+
+        <!-- KB-MAN end -->
           </ul>
         </section>
         <!-- /.sidebar -->
