@@ -427,12 +427,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deelbaarmechelen/klusbib-module.git",
-                "reference": "1cb2d78b095283b3a7cefb580a5bbcbbec862377"
+                "reference": "5a390e7f75218eebac2668d3258e07529c525cea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deelbaarmechelen/klusbib-module/zipball/1cb2d78b095283b3a7cefb580a5bbcbbec862377",
-                "reference": "1cb2d78b095283b3a7cefb580a5bbcbbec862377",
+                "url": "https://api.github.com/repos/deelbaarmechelen/klusbib-module/zipball/5a390e7f75218eebac2668d3258e07529c525cea",
+                "reference": "5a390e7f75218eebac2668d3258e07529c525cea",
                 "shasum": ""
             },
             "require": {
@@ -462,7 +462,7 @@
                 "source": "https://github.com/deelbaarmechelen/klusbib-module/tree/master",
                 "issues": "https://github.com/deelbaarmechelen/klusbib-module/issues"
             },
-            "time": "2020-07-22T14:43:02+00:00"
+            "time": "2020-09-06T19:02:02+00:00"
         },
         {
             "name": "deelbaarmechelen/remote-model",
@@ -4211,12 +4211,12 @@
             "version": "v1.1.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nrk/predis.git",
+                "url": "https://github.com/predis/predis.git",
                 "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
+                "url": "https://api.github.com/repos/predis/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
                 "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
                 "shasum": ""
             },
