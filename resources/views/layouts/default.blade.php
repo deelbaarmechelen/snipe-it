@@ -751,6 +751,30 @@
                             {{--</a>--}}
                         {{--</li>--}}
                     {{--@endif--}}
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.memberships.index'))
+                        <li>
+                            <a href="{{ route('klusbib.memberships.index') }}">
+                                <i class="fa fa-id-card"></i>
+                                <span>Lidmaatschappen</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.payments.index'))
+                        <li>
+                            <a href="{{ route('klusbib.payments.index') }}">
+                                <i class="fa fa-money"></i>
+                                <span>Betalingen</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if (\Illuminate\Support\Facades\Route::has('klusbib.lendings.index'))
+                        <li>
+                            <a href="{{ route('klusbib.lendings.index') }}">
+                                <i class="fa"></i>
+                                <span>Ontleningen</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </li>
             {{--@endif--}}
