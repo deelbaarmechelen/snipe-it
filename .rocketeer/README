@@ -1,0 +1,19 @@
+Deploy:
+$ rocketeer deploy (defaults to testing stage)
+$ rocketeer deploy --stage="production"
+$ rocketeer deploy --on="production" --stage="production"
+
+$ rocketeer deploy --pretend (Dry run)
+
+See also http://rocketeer.autopergamene.eu/IV-Usage/Deploying.html
+
+After login to server:
+ssh deelba1q@inventory.deelbaarmechelen.be -p 4000
+
+#php composer.phar install --no-dev --prefer-source
+#php composer.phar dump-autoload
+php artisan migrate
+php artisan config:clear
+php artisan config:cache
+
++ eventual update of /home/deelba1q/inventory.deelbaarmechelen.be/inventory/shared/.env
