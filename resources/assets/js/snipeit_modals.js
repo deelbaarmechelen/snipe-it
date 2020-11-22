@@ -11,14 +11,14 @@
 
  Create a Button looking like this:
 
- <a href='{{ route('modal.user') }}' data-toggle="modal"  data-target="#createModal" data-select='assigned_to' class="btn btn-sm btn-default">New</a>
+ <a href='{{ route('modal.show', 'user') }}' data-toggle="modal"  data-target="#createModal" data-select='assigned_to' class="btn btn-sm btn-primary">New</a>
 
  If you don't have access to Blade commands (like {{ and }}, etc), you can hard-code a URL as the 'href'
 
  data-toggle="modal" - required for Bootstrap Modals
  data-target="#createModal" - fixed ID for the modal, do not change
  data-select="assigned_to" - What is the *ID* of the select-dropdown that you're going to be adding to, if the modal-create was a success? Be on the lookout for duplicate ID's, it will confuse this library!
- class="btn btn-sm btn-default" - makes it look button-ey, feel free to change :)
+ class="btn btn-sm btn-primary" - makes it look button-ey, feel free to change :)
  
  If you want to pass additional variables to the modal (In the Category Create one, for example, you can pass category_id), you can encode them as URL variables in the href
  
@@ -28,7 +28,7 @@ $(function () {
 
 
   //handle modal-add-interstitial calls
-  var model, select;
+  var model, select, refreshSelector;
 
   if($('#createModal').length == 0) {
     $('body').append('<div class="modal fade" id="createModal"></div><!-- /.modal -->');
@@ -38,6 +38,8 @@ $(function () {
       var link = $(event.relatedTarget);
       model = link.data("dependency");
       select = link.data("select");
+      refreshSelector = link.data("refresh");
+      
       $('#createModal').load(link.attr('href'),function () {
         //do we need to re-select2 this, after load? Probably.
         $('#createModal').find('select.select2').select2();
@@ -52,7 +54,7 @@ $(function () {
                 ajax: {
 
                     // the baseUrl includes a trailing slash
-                    url: baseUrl + 'api/v1/' + endpoint + '/selectlist',
+                    url: Ziggy.baseUrl + 'api/v1/' + endpoint + '/selectlist',
                     dataType: 'json',
                     delay: 250,
                     headers: {
@@ -74,7 +76,7 @@ $(function () {
                         var answer =  {
                             results: data.items,
                             pagination: {
-                                more: "true" //(params.page  < data.page_count)
+                                more: data.pagination.more
                             }
                         };
 
@@ -123,6 +125,12 @@ $(function () {
             $('#createModal').modal('hide');
             $('#createModal').html("");
 
+            var refreshTable = $('#' + refreshSelector);
+
+            if(refreshTable.length > 0) {
+                refreshTable.bootstrapTable('refresh');
+            }
+
             // "select" is the original drop-down menu that someone
             // clicked 'add' on to add a new 'thing'
             // this code adds the newly created object to that select
@@ -160,7 +168,7 @@ function formatDatalist (datalist) {
     var markup = "<div class='clearfix'>" ;
     markup +="<div class='pull-left' style='padding-right: 10px;'>";
     if (datalist.image) {
-        markup += "<div style='width: 30px;'><img src='" + datalist.image + "' style='max-height: 20px; max-width: 30px;'></div>";
+        markup += "<div style='width: 30px;'><img src='" + datalist.image + "' alt='"+ datalist.tex + "' style='max-height: 20px; max-width: 30px;'></div>";
     } else {
         markup += "<div style='height: 20px; width: 30px;'></div>";
     }

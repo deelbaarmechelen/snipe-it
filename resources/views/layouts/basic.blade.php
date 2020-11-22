@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
 
@@ -8,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ ($snipeSettings) && ($snipeSettings->site_name) ? $snipeSettings->site_name : 'Snipe-IT' }}</title>
 
-
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ url(asset('js/plugins/select2/select2.min.css')) }}">
-
+    <link rel="shortcut icon" type="image/ico" href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url('').e($snipeSettings->favicon) : 'favicon.ico' }} ">
+    {{-- stylesheets --}}
     <link rel="stylesheet" href="{{ url(mix('css/dist/all.css')) }}">
+
+
+    <link rel="stylesheet" href="{{ url('css/dist/all.css') }}">
     <link rel="shortcut icon" type="image/ico" href="{{ url(asset('favicon.ico')) }}">
 
 
@@ -33,8 +34,8 @@
         border-color: {{ $snipeSettings->header_color }};
         }
 
-        </style>
 
+        </style>
     @endif
 
     @if (($snipeSettings) && ($snipeSettings->custom_css))
@@ -49,7 +50,7 @@
 
     @if (($snipeSettings) && ($snipeSettings->logo!=''))
         <center>
-            <img id="login-logo" src="{{ url('/') }}/uploads/{{ $snipeSettings->logo }}">
+            <img id="login-logo" src="{{ Storage::disk('public')->url('').e($snipeSettings->logo) }}">
         </center>
     @endif
   <!-- Content -->
