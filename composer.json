@@ -10,6 +10,12 @@
   ],
   "license": "AGPL-3.0-or-later",
   "type": "project",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/deelbaarmechelen/deel-it"
+    }
+  ],
   "require": {
     "php": "^7.2",
     "ext-curl": "*",
@@ -21,6 +27,7 @@
     "bacon/bacon-qr-code": "^1.0",
     "barryvdh/laravel-cors": "^0.11.3",
     "barryvdh/laravel-debugbar": "^3.2",
+    "deelbaarmechelen/deel-it": "dev-master",
     "doctrine/cache": "^1.10",
     "doctrine/common": "^2.12",
     "doctrine/dbal": "^2.10",

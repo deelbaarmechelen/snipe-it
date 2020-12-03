@@ -86,11 +86,6 @@
         <script src="{{ url(asset('js/html5shiv.js')) }}" nonce="{{ csrf_token() }}"></script>
         <script src="{{ url(asset('js/respond.js')) }}" nonce="{{ csrf_token() }}"></script>
 
-      <!-- KB-MAN start-->
-      {{--            @if (\Nwidart\Modules\Module::getLaravel()::has('klusbib'))--}}
-      @stack('custom-scripts')
-      {{--@endif--}}
-      <!-- KB-MAN end -->
 
   </head>
   <body class="sidebar-mini skin-{{ $snipeSettings->skin!='' ? $snipeSettings->skin : 'blue' }} {{ (session('menu_state')!='open') ? 'sidebar-mini sidebar-collapse' : ''  }}">
@@ -724,12 +719,6 @@
             </li>
             @endcan
 
-          <!-- KB-MAN start-->
-            {{--            @if (\Nwidart\Modules\Module::getLaravel()::has('klusbib'))--}}
-            @include ('klusbib::partials.menu')
-            @yield('klusbib-menu', '')
-            {{--@endif--}}
-          <!-- KB-MAN end -->
           </ul>
         </section>
         <!-- /.sidebar -->
