@@ -10,8 +10,7 @@ return [
 
     // The SSH/HTTPS address to your repository
     // Example: https://github.com/vendor/website.git
-    'repository' => '/home/deelba1q/snipe',
-//    'repository' => 'ssh://deelba1q@deelbaarmechelen.be:4000/home/deelba1q/snipe',
+    'repository' => 'https://github.com/deelbaarmechelen/snipe-it.git',
 
     // The repository credentials : you can leave those empty
     // if you're using SSH or if your repository is public
@@ -22,7 +21,7 @@ return [
     'password'   => null,
 
     // The branch to deploy
-    'branch'     => 'master',
+    'branch'     => 'deel-it',
 
     // Whether your SCM should do a "shallow" clone of the repository
     // or not – this means a clone with just the latest state of your

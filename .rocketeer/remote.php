@@ -38,7 +38,6 @@ return [
         'storage/private_uploads/users',
         '.env',
         'public/uploads',
-        'bbu_install.log',
         'storage/oauth-private.key',
         'storage/oauth-public.key',
         'npm-debug.log'
