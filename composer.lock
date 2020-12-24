@@ -427,12 +427,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deelbaarmechelen/klusbib-module.git",
-                "reference": "9f16404e869543811491451ad03ed49fe223404b"
+                "reference": "1e03fd92a752136459402ada3631cf3903275862"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deelbaarmechelen/klusbib-module/zipball/9f16404e869543811491451ad03ed49fe223404b",
-                "reference": "9f16404e869543811491451ad03ed49fe223404b",
+                "url": "https://api.github.com/repos/deelbaarmechelen/klusbib-module/zipball/1e03fd92a752136459402ada3631cf3903275862",
+                "reference": "1e03fd92a752136459402ada3631cf3903275862",
                 "shasum": ""
             },
             "require": {
@@ -462,7 +462,7 @@
                 "source": "https://github.com/deelbaarmechelen/klusbib-module/tree/master",
                 "issues": "https://github.com/deelbaarmechelen/klusbib-module/issues"
             },
-            "time": "2020-11-09T16:01:23+00:00"
+            "time": "2020-12-24T22:28:39+00:00"
         },
         {
             "name": "deelbaarmechelen/remote-model",
@@ -470,18 +470,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deelbaarmechelen/remote-model.git",
-                "reference": "80eae1f58c5950ebdacef7ee6a384e205f1ed480"
+                "reference": "48e0934a2654614cce19b82804da9e9c88cce0ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deelbaarmechelen/remote-model/zipball/80eae1f58c5950ebdacef7ee6a384e205f1ed480",
-                "reference": "80eae1f58c5950ebdacef7ee6a384e205f1ed480",
+                "url": "https://api.github.com/repos/deelbaarmechelen/remote-model/zipball/48e0934a2654614cce19b82804da9e9c88cce0ba",
+                "reference": "48e0934a2654614cce19b82804da9e9c88cce0ba",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "~5.5",
-                "illuminate/pagination": "~5.5",
-                "illuminate/support": "~5.5",
+                "illuminate/contracts": ">5.5",
+                "illuminate/pagination": ">5.5",
+                "illuminate/support": ">5.5",
                 "jenssegers/date": "^3.0",
                 "php": ">=5.5.9"
             },
@@ -526,7 +526,7 @@
             "support": {
                 "source": "https://github.com/deelbaarmechelen/remote-model/tree/master"
             },
-            "time": "2020-05-03T00:06:31+00:00"
+            "time": "2020-11-22T00:46:07+00:00"
         },
         {
             "name": "defuse/php-encryption",
@@ -2881,12 +2881,6 @@
                 "sftp",
                 "storage"
             ],
-            "funding": [
-                {
-                    "url": "https://offset.earth/frankdejonge",
-                    "type": "other"
-                }
-            ],
             "time": "2020-04-16T13:21:26+00:00"
         },
         {
@@ -3943,20 +3937,6 @@
                 "x.509",
                 "x509"
             ],
-            "funding": [
-                {
-                    "url": "https://github.com/terrafrost",
-                    "type": "github"
-                },
-                {
-                    "url": "https://www.patreon.com/phpseclib",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-04-04T23:17:33+00:00"
         },
         {
@@ -4254,6 +4234,16 @@
                 "nosql",
                 "predis",
                 "redis"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/tillkruss",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/tillkruss",
+                    "type": "github"
+                }
             ],
             "time": "2016-06-16T16:22:20+00:00"
         },
@@ -7011,12 +7001,12 @@
             ],
             "authors": [
                 {
-                    "name": "Matt Stauffer",
-                    "email": "matt@tighten.co"
-                },
-                {
                     "name": "Daniel Coulbourne",
                     "email": "daniel@tighten.co"
+                },
+                {
+                    "name": "Matt Stauffer",
+                    "email": "matt@tighten.co"
                 }
             ],
             "description": "Generates a Blade directive exporting all of your named Laravel routes. Also provides a nice route() helper function in JavaScript.",
@@ -7689,6 +7679,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
