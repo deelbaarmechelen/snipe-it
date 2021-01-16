@@ -36,6 +36,7 @@ jobs:
       uses: shivammathur/setup-php@verbose
       with:
         php-version: '7.1'
+        tools: composer:v1
       env:
         COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Install Composer dependencies
