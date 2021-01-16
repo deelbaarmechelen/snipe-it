@@ -6,6 +6,7 @@ name: Update Klusbib module
 # or API.
 on:
   workflow_dispatch:
+      types: [update_klusbib_module]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
