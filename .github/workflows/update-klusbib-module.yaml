@@ -33,13 +33,13 @@ jobs:
       with:
         ref: 'deelbaarm'
     - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@verbose
       with:
         php-version: '7.1'
-      #env:
-      #  COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Install Composer dependencies
-      run: composer update --no-progress --prefer-dist --optimize-autoloader deelbaarmechelen/klusbib-module
+      run: composer update -vvv deelbaarmechelen/klusbib-module
     #- name: Update module
     #  uses: php-actions/composer@v5
     #  with:
