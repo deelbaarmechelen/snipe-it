@@ -6,49 +6,43 @@ name: Update Klusbib module
 # or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
-    #inputs:
-      #name:
-        # Friendly description to be shown in the UI instead of 'name'
-        #description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        #default: 'World'
-        # Input has to be provided for the workflow to run
-        #required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
+  # This workflow contains a single job called "update-klusbib"
   update-klusbib:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    #- name: Send greeting
-    #  run: echo "Hello ${{ github.event.inputs.name }}"
     - name: Checkout repo
       uses: actions/checkout@v2
       with:
         ref: 'deelbaarm'
+    
     - name: Setup PHP
-      uses: shivammathur/setup-php@verbose
+      uses: shivammathur/setup-php@v2
       with:
         php-version: '7.1'
         tools: composer:v1
       env:
         COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Install Composer dependencies
+    
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+       
+    - name: Update Klusbib module
       run: composer update -vvv deelbaarmechelen/klusbib-module
-    #- name: Update module
-    #  uses: php-actions/composer@v5
-    #  with:
-    #    php_version: 7.1
-    #    version: 1
-    #    command: update -vvv deelbaarmechelen/klusbib-module
-    #  env:
-    #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
     - name: Add & Commit
       uses: EndBug/add-and-commit@v6.2.0
       with:
