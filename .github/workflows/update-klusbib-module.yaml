@@ -34,7 +34,9 @@ jobs:
         ref: 'deelbaarm'
     - name: Update module
       uses: php-actions/composer@v5
-      #with:
+      with:
+        php_version: 7.1
+        version: 1
       #  command: update -vvv deelbaarmechelen/klusbib-module
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
