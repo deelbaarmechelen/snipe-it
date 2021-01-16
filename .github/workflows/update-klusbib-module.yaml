@@ -35,7 +35,7 @@ jobs:
     - name: Update module
       uses: php-actions/composer@v5
       with:
-        command: update deelbaarmechelen/klusbib-module
+        command: update -vvv deelbaarmechelen/klusbib-module
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Add & Commit
