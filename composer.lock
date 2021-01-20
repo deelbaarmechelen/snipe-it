@@ -427,12 +427,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deelbaarmechelen/klusbib-module.git",
-                "reference": "25d21c53329efb487b28cc447a012215d6e1e858"
+                "reference": "e084556c489684066610537ba2eb7d6523cbc226"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deelbaarmechelen/klusbib-module/zipball/25d21c53329efb487b28cc447a012215d6e1e858",
-                "reference": "25d21c53329efb487b28cc447a012215d6e1e858",
+                "url": "https://api.github.com/repos/deelbaarmechelen/klusbib-module/zipball/e084556c489684066610537ba2eb7d6523cbc226",
+                "reference": "e084556c489684066610537ba2eb7d6523cbc226",
                 "shasum": ""
             },
             "require": {
