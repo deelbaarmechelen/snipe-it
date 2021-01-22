@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e941e10f2039b02ac5a6399bbad20128",
+    "content-hash": "f67bee1b8135b4627669a3a981f91251",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -439,11 +439,12 @@
                 "cloudcreativity/laravel-json-api": "^1.5",
                 "deelbaarmechelen/remote-model": "dev-master",
                 "guzzlehttp/guzzle": "^6.3",
-                "joshbrw/laravel-module-installer": "^0.1.4"
+                "joshbrw/laravel-module-installer": "^2.0"
             },
             "require-dev": {
                 "cloudcreativity/json-api-testing": "^1.2|^2.0"
             },
+            "default-branch": true,
             "type": "laravel-module",
             "extra": {
                 "laravel": {
@@ -462,7 +463,7 @@
                 "source": "https://github.com/deelbaarmechelen/klusbib-module/tree/master",
                 "issues": "https://github.com/deelbaarmechelen/klusbib-module/issues"
             },
-            "time": "2021-01-16T21:57:57+00:00"
+            "time": "2021-01-20T23:21:05+00:00"
         },
         {
             "name": "deelbaarmechelen/remote-model",
@@ -2196,26 +2197,26 @@
         },
         {
             "name": "joshbrw/laravel-module-installer",
-            "version": "v0.1.4",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joshbrw/laravel-module-installer.git",
-                "reference": "06bf72e947c313ba7d84c498fb6947a00ba313ef"
+                "reference": "667820efd0652df8ed61420cd0dec8df1b3ecdd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joshbrw/laravel-module-installer/zipball/06bf72e947c313ba7d84c498fb6947a00ba313ef",
-                "reference": "06bf72e947c313ba7d84c498fb6947a00ba313ef",
+                "url": "https://api.github.com/repos/joshbrw/laravel-module-installer/zipball/667820efd0652df8ed61420cd0dec8df1b3ecdd2",
+                "reference": "667820efd0652df8ed61420cd0dec8df1b3ecdd2",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1",
-                "php": "^5.4|7.*"
+                "composer-plugin-api": "^2.0",
+                "php": "7.* || 8.*"
             },
             "require-dev": {
-                "composer/composer": "^1.3",
+                "composer/composer": "^2.0",
                 "mockery/mockery": "~1.0",
-                "phpunit/phpunit": "~6.0"
+                "phpunit/phpunit": "~8.0 || ~9.0"
             },
             "type": "composer-plugin",
             "extra": {
@@ -2230,7 +2231,11 @@
             "license": [
                 "MIT"
             ],
-            "time": "2017-11-08T10:06:42+00:00"
+            "support": {
+                "issues": "https://github.com/joshbrw/laravel-module-installer/issues",
+                "source": "https://github.com/joshbrw/laravel-module-installer/tree/v2.0.1"
+            },
+            "time": "2021-01-17T21:51:00+00:00"
         },
         {
             "name": "kylekatarnls/update-helper",
@@ -9255,5 +9260,5 @@
     "platform-overrides": {
         "php": "7.1.2"
     },
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

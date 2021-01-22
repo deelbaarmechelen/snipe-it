@@ -30,7 +30,7 @@
     "guzzlehttp/guzzle": "^6.3",
     "intervention/image": "^2.4",
     "javiereguiluz/easyslugger": "^1.0",
-    "joshbrw/laravel-module-installer": "^0.1.4",
+    "joshbrw/laravel-module-installer": "^2.0",
     "laravel/framework": "5.5.*",
     "laravel/passport": "4.*",
     "laravel/tinker": "^1.0",
