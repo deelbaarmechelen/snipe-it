@@ -15,7 +15,8 @@
     }
   ],
     "require": {
-    "php": ">=7.1.2",
+    "php": "~7.1.2",
+    "ext-mbstring": "*",
     "barryvdh/laravel-cors": "^0.11.3",
     "barryvdh/laravel-debugbar": "^3.2",
     "doctrine/cache": "^1.8",
@@ -55,15 +56,10 @@
     "unicodeveloper/laravel-password": "^1.0",
     "watson/validating": "^3.0"
   },
-  "disabled-dep": {
-    "__comment" : "required? Will add module in vendor dir, but local install is direct checkout in Modules directory",
-    "deelbaarmechelen/klusbib-module": "dev-master"
-  },
   "require-dev": {
     "codeception/codeception": "2.3.6",
     "filp/whoops": "~2.0",
     "fzaninotto/faker": "~1.4",
-    "heroku/heroku-buildpack-php": "*",
     "mockery/mockery": "dev-master",
     "phpunit/php-token-stream": "1.4.11",
     "phpunit/phpunit": "~6.0",
