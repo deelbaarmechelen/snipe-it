@@ -1,0 +1,54 @@
+# This is a basic workflow that is manually triggered
+
+name: Update Klusbib module
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  repository_dispatch:
+      types: [update_klusbib_module]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "update-klusbib"
+  update-klusbib:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+      with:
+        ref: 'deelbaarm'
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.1'
+        tools: composer:v1
+      env:
+        COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+       
+    - name: Update Klusbib module
+      run: composer update deelbaarmechelen/klusbib-module
+    
+    - name: Add & Commit
+      uses: EndBug/add-and-commit@v6.2.0
+      with:
+        author_name: Bernard Butaye
+        author_email: bernard@deelbaarmechelen.be
+        message: 'Update Klusbib module'
+        add: 'composer.lock'
+        branch: 'deelbaarm'
