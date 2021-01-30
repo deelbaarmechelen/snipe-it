@@ -21,15 +21,14 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Cloning repo
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      # Deploy to test environment
-      - id: deploy
-        name: Deploy to dokku
-        uses: idoberko2/dokku-deploy-github-action@v1
+      - name: Push to dokku
+        uses: dokku/github-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          dokku-host: 'klusbib.be'
-          app-name: 'testinventory'
+          git_remote_url: 'ssh://dokku@klusbib.be:22/testinventory'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          
