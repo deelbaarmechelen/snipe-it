@@ -1,7 +1,7 @@
 <?php
 
 if (env('APP_ENV') === 'production') {
-    URL::forceSchema('https');
+    URL::forceScheme('https');
 }
 
 Route::group(['middleware' => 'auth'], function () {
