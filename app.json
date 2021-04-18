@@ -1,0 +1,8 @@
+{
+  "cron": [
+    {
+      "command": "/app/.heroku/php/bin/php artisan schedule:run >> /dev/null 2>&1",
+      "schedule": "* * * * *"
+    }
+  ]
+}
