@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Test
 
 # Controls when the action will run. 
 on:
