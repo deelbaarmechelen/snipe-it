@@ -457,12 +457,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/deelbaarmechelen/klusbib-module.git",
-                "reference": "c517a75eb66ca44b27b622da91ecf509d235a8fe"
+                "reference": "d814b9d16ec157ef0b62f9c1f9f458712600775a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deelbaarmechelen/klusbib-module/zipball/c517a75eb66ca44b27b622da91ecf509d235a8fe",
-                "reference": "c517a75eb66ca44b27b622da91ecf509d235a8fe",
+                "url": "https://api.github.com/repos/deelbaarmechelen/klusbib-module/zipball/d814b9d16ec157ef0b62f9c1f9f458712600775a",
+                "reference": "d814b9d16ec157ef0b62f9c1f9f458712600775a",
                 "shasum": ""
             },
             "require": {
@@ -495,7 +495,7 @@
                 "source": "https://github.com/deelbaarmechelen/klusbib-module/tree/master",
                 "issues": "https://github.com/deelbaarmechelen/klusbib-module/issues"
             },
-            "time": "2021-05-19T10:39:20+00:00"
+            "time": "2021-05-19T12:57:25+00:00"
         },
         {
             "name": "deelbaarmechelen/remote-model",
