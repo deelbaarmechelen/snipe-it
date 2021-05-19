@@ -1,14 +1,8 @@
-name: Deploy
+name: Deploy Prod
 
 # Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the deelbaarm branch
-  push:
-    branches: [ deelbaarm ]
-  pull_request:
-    branches: [ deelbaarm ]
-
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -30,6 +24,6 @@ jobs:
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: 'ssh://dokku@klusbib.be:22/testinventory'
+          git_remote_url: 'ssh://dokku@klusbib.be:22/inventory'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           
