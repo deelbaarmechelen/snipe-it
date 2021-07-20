@@ -30,6 +30,6 @@ jobs:
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: 'ssh://dokku@test.klusbib.be:22/inventory'
+          git_remote_url: 'ssh://dokku@inventory.test.klusbib.be:22/inventory'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           
